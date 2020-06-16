@@ -1,9 +1,8 @@
 import tkinter as tk
 import requests
-from PIL import Image, ImageTk
 from tkinter import font
-from urllib.request import urlopen
-from io import BytesIO
+
+
 
 #variables for screen
 Height = 600
