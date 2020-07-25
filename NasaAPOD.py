@@ -16,6 +16,7 @@ def comm_APOD(date):
 	params = {'date': date}
 	response = requests.get(url, params=params)
 	APOD = response.json()
+	textbox.delete(1.0, tk.END)
 	textbox.insert(tk.INSERT, get_APOD(APOD))
 	
 
@@ -67,5 +68,4 @@ button = tk.Button(frame3, text='Get APOD', font=("Arial", 14), command=lambda: 
 button.place(relx=0.82, rely=.1, relheight=0.8, relwidth=0.17)
 
 root.mainloop()
-
 
