@@ -1,6 +1,8 @@
 import tkinter as tk
 import requests
 from tkinter import font
+import io
+from PIL import Image
 
 
 
@@ -11,30 +13,40 @@ Width = 800
 
 #Communicating with the NASA API
 def comm_APOD(date):
-	APOD_key = 'HfqfZabWQhGl6HQ2BctJdiOy10AtT5opHwZTDVsx'
-	url = 'https://api.nasa.gov/planetary/apod?api_key=HfqfZabWQhGl6HQ2BctJdiOy10AtT5opHwZTDVsx'
-	params = {'date': date}
-	response = requests.get(url, params=params)
-	APOD = response.json()
-	textbox.delete(1.0, tk.END)
-	textbox.insert(tk.INSERT, get_APOD(APOD))
-	
+    APOD_key = 'HfqfZabWQhGl6HQ2BctJdiOy10AtT5opHwZTDVsx'
+    url = 'https://api.nasa.gov/planetary/apod?api_key=HfqfZabWQhGl6HQ2BctJdiOy10AtT5opHwZTDVsx'
+    params = {'date': date}
+    response = requests.get(url, params=params)
+    APOD = response.json()
+    getImg = requests.get(APOD['url'])
+    img = Image.open(io.BytesIO(getImg.content))
+    img = img.resize((int(img.width / 2.5), int(img.height / 2.5)))
+    img.save('tempNASA_APOD_img.png') # saves the downloaded image as a temporary img file
+    textbox.delete(1.0, tk.END)
+    textbox.insert(tk.INSERT, get_APOD(APOD))
+    root.after(5000, showImg) # After 5 seconds it will then show the picture where the text displays
 
+
+def showImg():
+    global img, frame2
+    frame2.destroy()
+    frame2 = tk.Frame(root, bd=5, bg='#5F9F9F')
+    frame2.place(relx=.1, rely=.1, relheight=0.65, relwidth=.8)
+    img = tk.PhotoImage(file='tempNASA_APOD_img.png')
+    dispImg = tk.Label(frame2, image=img)
+    dispImg.pack()
 
 def get_APOD(APOD):
-	try:
-		date = APOD['date']
-		exp = APOD['explanation']
-		url = APOD['url']
+    try:
+        date = APOD['date']
+        exp = APOD['explanation']
+        url = APOD['url']
 
-		string = 'The Date: %s \nExplanation of Picture: %s \nUrl of the photo/video: \n%s' % (date, exp, url)
-	except:
-		string = 'was not a valid date'
-	return str(string)
+        string = 'The Date: %s \nExplanation of Picture: %s \nUrl of the photo/video: \n%s' % (date, exp, url)
+    except:
+        string = 'was not a valid date'
+    return str(string)
 
-
-
-	
 
 
 #Whats on the screen
