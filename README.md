@@ -1,7 +1,4 @@
-# App for checking the APOD
-This app lets you check the Astronomy Picute of the Day. It is my first project.
+# App that lets you search for any Astronomy Picture of the Day.
+This app lets you check the Astronomy Picture of the Day(of any day).
 It communicates with NASA's open API to get the APOD so you can check it.
-It is my first so there are some problems I have yet to figure out like being able to change
-the text in the box, also it does not clear text if you try to get a different APOD
-
-note- because this is an exe file your computer may warn about it being potentailly dangerous, but its just my little application.
+This app will show you the picture for that particular day as well as a written description(provided by NASA's API).
