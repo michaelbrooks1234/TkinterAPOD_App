@@ -24,17 +24,15 @@ def comm_APOD(date):
     img.save('tempNASA_APOD_img.png') # saves the downloaded image as a temporary img file
     textbox.delete(1.0, tk.END)
     textbox.insert(tk.INSERT, get_APOD(APOD))
-    root.after(5000, showImg) # After 5 seconds it will then show the picture where the text displays
+    showImg() 
 
 
 def showImg():
-    global img, frame2
-    frame2.destroy()
-    frame2 = tk.Frame(root, bd=5, bg='#5F9F9F')
-    frame2.place(relx=.1, rely=.1, relheight=0.65, relwidth=.8)
+    global img, dispImg
+    dispImg.destroy()
     img = tk.PhotoImage(file='tempNASA_APOD_img.png')
-    dispImg = tk.Label(frame2, image=img)
-    dispImg.pack()
+    dispImg = tk.Label(frame2_point5, image=img)
+    dispImg.pack(side='top',expand='yes')
 
 def get_APOD(APOD):
     try:
@@ -59,7 +57,13 @@ frame = tk.Frame(root, bg='#E0EEEE')
 frame.place(relwidth=1, relheight=1)
 
 frame2 = tk.Frame(root, bd=5, bg='#5F9F9F')
-frame2.place(relx=.1, rely=.1, relheight=0.65, relwidth=.8)
+frame2.place(relx=.1, rely=.53, relheight=0.26, relwidth=.8)
+
+frame2_point5 = tk.Frame(root, bd=5, bg='#5F9F9F')
+frame2_point5.place(relx=.1, rely=.1, relheight=0.42, relwidth=.8)
+
+dispImg = tk.Label(frame2_point5, image=None)
+dispImg.place(relx=0, rely=0, relheight=1, relwidth=1)
 
 textbox = tk.Text(frame2, font=('Arial', 12), text=None)
 textbox.place(relx=0, rely=0, relheight=1, relwidth=1)
@@ -80,4 +84,3 @@ button = tk.Button(frame3, text='Get APOD', font=("Arial", 14), command=lambda: 
 button.place(relx=0.82, rely=.1, relheight=0.8, relwidth=0.17)
 
 root.mainloop()
-
